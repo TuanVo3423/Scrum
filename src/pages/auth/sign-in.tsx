@@ -10,7 +10,7 @@ export default function SignInPage() {
         <title>SignInPage - AI.recycling.website</title>
         <meta
           name="description"
-          content="Meta description for the Assistant page"
+          content="This is a sign-in page for the AI recycling website."
         />
       </Head>
       <SignIn />
