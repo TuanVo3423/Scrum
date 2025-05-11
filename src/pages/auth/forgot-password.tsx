@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
         <title>ForgotPasswordPage - AI.recycling.website</title>
         <meta
           name="description"
-          content="Meta description for the Assistant page"
+          content="forgot password page description"
         />
       </Head>
       <ForgotPassword />
