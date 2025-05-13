@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
 export default function CreateInstructionsPage() {
+  console.log(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
   return (
     <>
       <Head>
