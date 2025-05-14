@@ -1,7 +1,8 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { ConversationSummaryMemory } from 'langchain/memory';
 import { LLMChain } from 'langchain/chains';
 import { PromptTemplate } from 'langchain/prompts';
+import { BaseLanguageModel } from 'langchain/dist/base_language';
 
 interface IGeminiRequest {
   handleStream: (token: string) => void;
@@ -18,8 +19,10 @@ export const GeminiRequest = ({
   prompt,
   GeminiParams,
 }: IGeminiRequest) => {
+  // Sử dụng ChatGoogleGenerativeAI trực tiếp
   const model = new ChatGoogleGenerativeAI({
     apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+    modelName: 'gemini-2.5-flash-preview-04-17', // Sử dụng model name chính xác
     temperature: 0.3,
     streaming: true,
     callbacks: [
@@ -27,8 +30,10 @@ export const GeminiRequest = ({
         handleLLMNewToken(token: string) {
           handleStream(token);
         },
-        handleLLMEnd(token: string) {
-          handleStreamEnd(token);
+        handleLLMEnd(output: any) {
+          handleStreamEnd(
+            typeof output === 'string' ? output : JSON.stringify(output)
+          );
         },
         handleLLMStart() {
           if (handleStreamStart) {
@@ -39,7 +44,7 @@ export const GeminiRequest = ({
       },
     ],
     ...GeminiParams,
-  });
+  }) as unknown as BaseLanguageModel;
 
   const chain = new LLMChain({ llm: model, prompt });
   return {
@@ -48,10 +53,12 @@ export const GeminiRequest = ({
 };
 
 export const GeminiRequestNotStream = ({ prompt }: IGeminiRequest) => {
+  // Sử dụng ChatGoogleGenerativeAI trực tiếp
   const model = new ChatGoogleGenerativeAI({
     apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+    modelName: 'gemini-2.5-flash-preview-04-17', // Sử dụng model name chính xác
     temperature: 0.3,
-  });
+  }) as unknown as BaseLanguageModel;
 
   const chain = new LLMChain({ llm: model, prompt });
   return {
@@ -64,8 +71,10 @@ export const GeminiRequestWithMemory = ({
   prompt,
   GeminiParams,
 }: IGeminiRequest) => {
+  // Sử dụng ChatGoogleGenerativeAI trực tiếp
   const model = new ChatGoogleGenerativeAI({
     apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY,
+    modelName: 'gemini-1.5-flash', // Sử dụng model name chính xác
     temperature: 0.3,
     streaming: true,
     callbacks: [
@@ -76,11 +85,13 @@ export const GeminiRequestWithMemory = ({
       },
     ],
     ...GeminiParams,
-  });
+  }) as unknown as BaseLanguageModel;
+
   const memory = new ConversationSummaryMemory({
     memoryKey: 'chat_history',
     llm: model,
   });
+
   const chain = new LLMChain({ llm: model, prompt, memory });
   return {
     memory,

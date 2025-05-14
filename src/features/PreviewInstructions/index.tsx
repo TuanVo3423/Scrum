@@ -9,6 +9,7 @@ import {
   Button,
   Flex,
   HStack,
+  Spinner,
   Stack,
   Text,
   useDisclosure,
@@ -200,55 +201,66 @@ export const PreviewInstructions = ({ ...rest }: TPreviewInstructionsProps) => {
               Share
             </Button> */}
           </HStack>
-        </HStack>
-
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <Stack key={index}>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(droppableProvided, droppableProvidedSnapshot) => {
-                    return (
-                      <Flex
-                        flexDir="column"
-                        gap={4}
-                        w="full"
-                        {...droppableProvided.droppableProps}
-                        ref={droppableProvided.innerRef}
-                      >
-                        {column.tableOfContents.map((section, index) => {
-                          return (
-                            <Draggable
-                              key={section.id}
-                              draggableId={section.id.toString()}
-                              index={index}
-                            >
-                              {(DraggableProvided, DraggableSnapshot) => {
-                                return (
-                                  <CardTableContent
-                                    columns={columns}
-                                    setColumns={setColumns}
-                                    index={index}
-                                    form={form}
-                                    section={section}
-                                    snapshot={DraggableSnapshot}
-                                    provided={DraggableProvided}
-                                  />
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                      </Flex>
-                    );
-                  }}
-                </Droppable>
-              </Stack>
-            );
-          })}
-        </DragDropContext>
+        </HStack>{' '}
+        {isFinish ? (
+          <DragDropContext
+            onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+          >
+            {Object.entries(columns).map(([columnId, column], index) => {
+              return (
+                <Stack key={index}>
+                  <Droppable droppableId={columnId} key={columnId}>
+                    {(droppableProvided, droppableProvidedSnapshot) => {
+                      return (
+                        <Flex
+                          flexDir="column"
+                          gap={4}
+                          w="full"
+                          {...droppableProvided.droppableProps}
+                          ref={droppableProvided.innerRef}
+                        >
+                          {column.tableOfContents.map((section, index) => {
+                            return (
+                              <Draggable
+                                key={section.id}
+                                draggableId={section.id.toString()}
+                                index={index}
+                              >
+                                {(DraggableProvided, DraggableSnapshot) => {
+                                  return (
+                                    <CardTableContent
+                                      columns={columns}
+                                      setColumns={setColumns}
+                                      index={index}
+                                      form={form}
+                                      section={section}
+                                      snapshot={DraggableSnapshot}
+                                      provided={DraggableProvided}
+                                    />
+                                  );
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                        </Flex>
+                      );
+                    }}
+                  </Droppable>
+                </Stack>
+              );
+            })}
+          </DragDropContext>
+        ) : (
+          <Flex justify="center" align="center" w="full" py={10}>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="green.500"
+              size="xl"
+            />
+          </Flex>
+        )}
         {true && (
           <ModalAddSection
             onSubmit={onSubmit}

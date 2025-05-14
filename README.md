@@ -75,4 +75,4 @@ Start your app in production environment
 
 ## Code convention
 
-1. `Component` should be PascalCase
+1. `Component` should be PascalCase !
