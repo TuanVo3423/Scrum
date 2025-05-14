@@ -8,7 +8,7 @@ export default function CollectionsPage() {
   return (
     <>
       <Head>
-        <title>CollectionsPage - AI.recycling.website</title>
+        <title>CollectionsPage - (AI.recycling.website)</title>
         <meta
           name="description"
           content="Meta description for the Assistant page"

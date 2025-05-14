@@ -8,7 +8,7 @@
         return (
           <>
             <Head>
-              <title>ChatPage - AI.recycling.website</title>
+              <title>ChatPage - (AI.recycling.website)</title>
               <meta
                 name="description"
                 content="Meta description for the Assistant page"
