@@ -56,5 +56,6 @@ export const editInstructionsInMyTweets = async ({
     method: 'PATCH',
     data: payload,
   });
+  
   return res as IEditInstructionsInMyTweetsResponse;
 };
