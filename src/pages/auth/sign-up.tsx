@@ -10,7 +10,7 @@ export default function SignUpPage() {
         <title>SignUpPage - AI.recycling.website</title>
         <meta
           name="description"
-          content="Meta description for the Assistant page"
+          content="This is the SignUp page for AI.recycling.website"
         />
       </Head>
       <SignUp />
